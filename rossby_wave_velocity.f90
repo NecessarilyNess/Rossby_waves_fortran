@@ -1,4 +1,5 @@
 program rossby_wave_velocity
+ use rossby_wave_attributes
  implicit none
  integer :: k, l, x, y, a, t
  real :: u, v, x1, y1, k1, l1, t1, phase1, amplitude_func, dispersion_func, s, b
@@ -34,6 +35,6 @@ program rossby_wave_velocity
  !print*,'time =',t1
  print*,s/((b+1)**2),','
  s = 0.
- 
+
  enddo
 end program rossby_wave_velocity
