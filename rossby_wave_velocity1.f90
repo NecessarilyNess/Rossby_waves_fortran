@@ -3,8 +3,6 @@ program rossby_wave_velocity
     use admin
     implicit none
 
-    print*, velocity_field(0.0,0.0,0.0)
-
     contains 
     function velocity_field(x,y,t) result(velocity)
         !Returns the velocity field at point (x,y) at time t
@@ -31,4 +29,27 @@ program rossby_wave_velocity
         end do
 
     end function velocity_field
+
+    function average_speed(x_endpoint, y_endpoint, grid_resolution, t) result(spatial_speed_average)
+    !x_endpoint = 5.0, y_endpoint = 5.0, grid_resolution = 64
+        real :: x_endpoint, y_endpoint, t, spatial_speed_average
+        integer :: grid_resolution, counter_x, counter_y
+        real, dimension(64) :: x_array, y_array
+        real :: x,y
+
+        !Initialisation
+        x_array = linspace(-x_endpoint,x_endpoint,grid_resolution)
+        y_array = linspace(-y_endpoint,y_endpoint,grid_resolution)
+        spatial_speed_average = 0
+
+        do counter_x = 1,grid_resolution
+            x = x_array(counter_x)
+            do counter_y = 1,grid_resolution
+                y = y_array(counter_y)
+                spatial_speed_average = spatial_speed_average + dot_product(velocity_field(x,y,t), velocity_field(x,y,t))
+            end do
+        end do
+        spatial_speed_average = spatial_speed_average/(grid_resolution**2)
+    end function average_speed
+
 end program rossby_wave_velocity
