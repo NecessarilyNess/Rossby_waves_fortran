@@ -3,6 +3,8 @@ program rossby_wave_velocity
     use admin
     implicit none
 
+    print*,velocity_field(1.,0.,0.)
+
     contains 
     function velocity_field(x,y,t) result(velocity)
         !Returns the velocity field at point (x,y) at time t
