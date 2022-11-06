@@ -30,7 +30,7 @@ program rossby_wave_velocity
 
     end function velocity_field
 
-    function average_speed(x_endpoint, y_endpoint, grid_resolution, t) result(spatial_speed_average)
+    subroutine average_speed(x_endpoint, y_endpoint, grid_resolution, t)
     !x_endpoint = 5.0, y_endpoint = 5.0, grid_resolution = 64
         real :: x_endpoint, y_endpoint, t, spatial_speed_average
         integer :: grid_resolution, counter_x, counter_y
@@ -50,6 +50,6 @@ program rossby_wave_velocity
             end do
         end do
         spatial_speed_average = spatial_speed_average/(grid_resolution**2)
-    end function average_speed
+    end subroutine average_speed
 
 end program rossby_wave_velocity
