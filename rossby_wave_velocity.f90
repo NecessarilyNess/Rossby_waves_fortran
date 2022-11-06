@@ -1,40 +1,55 @@
 program rossby_wave_velocity
- use rossby_wave_attributes
- implicit none
- integer :: k, l, x, y, a, t
- real :: u, v, x1, y1, k1, l1, t1, phase1, amplitude_func, dispersion_func, s, b
- 
- a = 63
- b = 63.
+    use rossby_wave_attributes
+    use admin
+    implicit none
 
- u = 0.
- v = 0.
- s = 0.
- phase1 = 0
- do t=0,50
- do x=0,a
- do y=0,a
- do k=0,a
- do l=0,a
-    x1 = (10*x/b - 5.)
-    y1 = (10*y/b - 5.)
-    k1 = (4*k/b - 2.)
-    l1 = (4*l/b - 2.)
-    t1 = t*1E8
-    u = u + l1*amplitude_func(k1,l1)*sin(k1*x1 + l1*y1 - dispersion_func(k1,l1)*t1 + phase1)
-    v = v - k1*amplitude_func(k1,l1)*sin(k1*x1 + l1*y1 - dispersion_func(k1,l1)*t1 + phase1)
-    
- enddo
- enddo
-    s = s + (u**2 + v**2)**(0.5)
-    u = 0.
-    v = 0.
+    contains 
+    function velocity_field(x,y,t) result(velocity)
+        !Returns the velocity field at point (x,y) at time t
+        !upper and lower k,l are -2 and 2
+        real :: x,y,t
+        real :: k,l,phase1
+        real, dimension(64) :: k_array, l_array
+        integer :: counter_l, counter_k
+        real, dimension(2) :: velocity
 
- enddo
- enddo
- !print*,'time =',t1
- print*,s/((b+1)**2),','
- s = 0.
+        !Initialisation
+        k_array = linspace(-2.0,2.0,64)
+        l_array = linspace(-2.0,2.0,64)
+        velocity = (/0.0,0.0/)
+        phase1 = 0.0
 
- enddo
+        do counter_k = 1, 64
+            k = k_array(counter_k)
+            do counter_l = 1, 64
+                l = l_array(counter_l)
+                velocity(1) = velocity(1) + l*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1)
+                velocity(2) = velocity(2) - k*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1)
+            end do
+        end do
+
+    end function velocity_field
+
+    subroutine average_speed(x_endpoint, y_endpoint, grid_resolution, t)
+    !x_endpoint = 5.0, y_endpoint = 5.0, grid_resolution = 64
+        real :: x_endpoint, y_endpoint, t, spatial_speed_average
+        integer :: grid_resolution, counter_x, counter_y
+        real, dimension(64) :: x_array, y_array
+        real :: x,y
+
+        !Initialisation
+        x_array = linspace(-x_endpoint,x_endpoint,grid_resolution)
+        y_array = linspace(-y_endpoint,y_endpoint,grid_resolution)
+        spatial_speed_average = 0
+
+        do counter_x = 1,grid_resolution
+            x = x_array(counter_x)
+            do counter_y = 1,grid_resolution
+                y = y_array(counter_y)
+                spatial_speed_average = spatial_speed_average + dot_product(velocity_field(x,y,t), velocity_field(x,y,t))
+            end do
+        end do
+        spatial_speed_average = spatial_speed_average/(grid_resolution**2)
+    end subroutine average_speed
+
 end program rossby_wave_velocity
