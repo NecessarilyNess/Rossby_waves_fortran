@@ -4,6 +4,7 @@ program rossby_wave_velocity
     implicit none
 
     print*,velocity_field(1.,0.,0.)
+    call average_speed(5.0,5.0,64,0.)
 
     contains 
     function velocity_field(x,y,t) result(velocity)
@@ -25,8 +26,8 @@ program rossby_wave_velocity
             k = k_array(counter_k)
             do counter_l = 1, 64
                 l = l_array(counter_l)
-                velocity(1) = velocity(1) + l*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1)
-                velocity(2) = velocity(2) - k*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1)
+                velocity(1) = velocity(1) + 2*pi*l*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase1)
+                velocity(2) = velocity(2) - 2*pi*k*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase1)
             end do
         end do
 

@@ -20,7 +20,7 @@ contains
             k = k_array(counter_k)
             do counter_l = 1, 64
                 l = l_array(counter_l)
-                psi = psi + amplitude(k,l)*cos(k*x + l*y - dispersion(k,l)*t + phase1)
+                psi = psi + amplitude(k,l)*cos(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase1)
             end do
         end do
                 
@@ -41,7 +41,7 @@ contains
             k = k_array(counter_k)
             do counter_l = 1, 64
                 l = l_array(counter_l)
-                phi = phi + amplitude(k,l)*cos(k*x + l*y - dispersion(k,l)*t + phase2)
+                phi = phi + amplitude(k,l)*cos(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase2)
             end do
         end do
     end function potential
@@ -62,10 +62,10 @@ contains
             k = k_array(counter_k)
             do counter_l = 1, 64
                 l = l_array(counter_l)
-                velocity(1) = velocity(1) + l*(1-eps)*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1) 
-                velocity(1) = velocity(1)- k*eps*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase2)
-                velocity(2) = velocity(2) - k*(1-eps)*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase1) 
-                velocity(2) = velocity(2) - l*eps*amplitude(k,l)*sin(k*x + l*y - dispersion(k,l)*t + phase2)
+                velocity(1) = velocity(1) + 2*pi*l*(1-eps)*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase1) 
+                velocity(1) = velocity(1) - 2*pi*k*eps*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase2)
+                velocity(2) = velocity(2) - 2*pi*k*(1-eps)*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase1) 
+                velocity(2) = velocity(2) - 2*pi*l*eps*amplitude(k,l)*sin(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase2)
             end do
         end do
                 
@@ -86,7 +86,7 @@ contains
             k = k_array(counter_k)
             do counter_l = 1, 64
                 l = l_array(counter_l)
-                div = div - (k**2 + l**2)*amplitude(k,l)*cos(k*x + l*y - dispersion(k,l)*t + phase2)
+                div = div - 4*pi*pi*(k**2 + l**2)*amplitude(k,l)*cos(2*pi*k*x + 2*pi*l*y - dispersion(k,l)*t + phase2)
             end do
         end do
     end function velocity_divergence

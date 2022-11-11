@@ -1,2 +1,11 @@
 constants.mod
 constants.o
+admin.o
+admin.mod
+data.csv
+rossby_wave_attributes.o
+rossby_wave_attributes.mod
+rossby_wave_velocity.o
+rossby_wave_velocity.mod
+velocity.o
+velocity.mod
