@@ -6,8 +6,8 @@ real :: eps = 0.01 !Placeholder value
 
 contains
     function streamfunction(x,y,t,phase1) result(psi)
-        real :: x, y, t, k, l, phase1, psi
-        real, dimension(64) :: k_array, l_array
+        real(dp) :: x, y, t, k, l, phase1, psi
+        real(dp), dimension(64) :: k_array, l_array
         integer :: counter_l, counter_k
 
         !Initialisation
@@ -27,8 +27,8 @@ contains
     end function streamfunction
     
     function potential(x,y,t,phase2) result(phi)
-        real :: x, y, t, k, l, phase2, phi
-        real, dimension(64) :: k_array, l_array
+        real(dp) :: x, y, t, k, l, phase2, phi
+        real(dp), dimension(64) :: k_array, l_array
         integer :: counter_l, counter_k
 
         !Initialisation
@@ -47,8 +47,8 @@ contains
     end function potential
     
     function velocity_field(x,y,t,phase1,phase2) result(velocity)
-        real :: x, y, t, k, l, phase1, phase2, velocity(2)
-        real, dimension(64) :: k_array, l_array
+        real(dp) :: x, y, t, k, l, phase1, phase2, velocity(2)
+        real(dp), dimension(64) :: k_array, l_array
         integer :: counter_l, counter_k
 
         !Initialisation
@@ -72,8 +72,8 @@ contains
     end function velocity_field
     
     function velocity_divergence(x,y,t,phase2) result(div)
-        real :: x, y, t, k, l, phase2, div
-        real, dimension(64) :: k_array, l_array
+        real(dp) :: x, y, t, k, l, phase2, div
+        real(dp), dimension(64) :: k_array, l_array
         integer :: counter_l, counter_k
 
         !Initialisation

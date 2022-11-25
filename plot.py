@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 #import csv
 import numpy as np
 from matplotlib.animation import FuncAnimation, PillowWriter
-time = 81
+time = 21
 
 with open("data.csv") as file_name:
     array = np.loadtxt(file_name, delimiter=",")
@@ -26,7 +26,7 @@ def update_plot(ii):
     plt.cla()
     plt.xlabel('X')
     plt.ylabel('Y')
-    plt.title(f'Velocity of an isotropic spectrum of 25 random Rossby waves, t={ii}')
+    plt.title(f'Velocity of a spectrum of 81 double-precision Rossby waves with random phases, t={ii}')
     plt.quiver(xx, yy, array1[:,:,2*ii], array1[:,:,2*ii+1], np.arctan2(array1[:,:,2*ii],array1[:,:,2*ii+1]))
 
 anim = FuncAnimation(fig,
@@ -35,7 +35,7 @@ anim = FuncAnimation(fig,
                         init_func=init_func)
 
 writergif = PillowWriter(fps=3)
-anim.save('velocityanim25R.gif', writer=writergif)
+anim.save('velocityanimdoubleprecision81R.gif', writer=writergif)
 
 #x = np.linspace(-5,5,64)
 #y = np.linspace(-5,5,64)
